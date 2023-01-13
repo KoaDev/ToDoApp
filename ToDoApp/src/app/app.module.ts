@@ -19,6 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TaskComponent } from './components/task/task.component';
 import { ListComponent } from './components/list/list.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ListComponent } from './components/list/list.component';
     LoginComponent,
     RegisterComponent,
     TaskComponent,
-    ListComponent
+    ListComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

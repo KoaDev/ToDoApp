@@ -1,0 +1,22 @@
+<div class="grid-container">
+    <h1>User information</h1>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> Informations </mat-card-title>
+        </mat-card-header>
+        <br />
+        <mat-card-content>
+            <form>
+                <mat-form-field class="full-width">
+                    <mat-label>_id</mat-label>
+                    <input type="text" matInput disabled value="{{ data._id }}" />
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>username</mat-label>
+                    <input type="text" matInput disabled value="{{ data.username }}" />
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+  
