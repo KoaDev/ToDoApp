@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TaskComponent } from './components/task/task.component';
+import { IsSignedInGuard } from './is-signed-in.guard';
 
 const routes : Routes = [
   {
@@ -11,6 +13,11 @@ const routes : Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'task',
+    component: TaskComponent,
+    canActivate: [IsSignedInGuard]
   },
 ];
 

@@ -1,0 +1,79 @@
+<div class="grid-container">
+    <h1>Dashboard</h1>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> Add task to list ... </mat-card-title>
+        </mat-card-header>
+        <br />
+        <mat-card-content>
+            <form>
+                <mat-form-field class="full-width">
+                    <mat-label>Title</mat-label>
+                    <input type="text" matInput [formControl]="FormControl" placeholder="Ex. pat" [(ngModel)]="newTask.title" />
+                    <mat-error *ngIf="FormControl.hasError('required')">
+                    Title is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>List</mat-label>
+                    <mat-select
+                    [formControl]="FormControl"
+                    value="Ex. pat"
+                    [(ngModel)]="newTask.list_id"
+                    >
+                    <mat-option *ngFor="let list of lists" [value]="list._id">{{
+                        list.title
+                    }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="FormControl.hasError('required')">
+                    List is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+    
+                <button mat-raised-button color="primary" (click)="add()">Add</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    <br />
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> Select list ... </mat-card-title>
+        </mat-card-header>
+        <br />
+        <mat-card-content>
+            <section>
+                <div class="button-row">
+                    <button color="primary" mat-raised-button *ngFor="let list of lists" (click)="filterList(list._id)" >
+                        {{ list.title }}
+                    </button>
+                </div>
+            </section>
+        </mat-card-content>
+    </mat-card>
+    <br /> 
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> Your task </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+            <div class="container">
+                <h2>To do</h2>
+                <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" class="list" (cdkDropListDropped)="drop($event)" >
+                    <div class="box" *ngFor="let item of todo" cdkDrag>
+                        {{ item.title }}
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Done</h2>
+                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]" class="list" (cdkDropListDropped)="drop($event)" >
+                    <div class="box" *ngFor="let item of done" cdkDrag>
+                        {{ item.title }}
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <br />
+  </div>
+  
