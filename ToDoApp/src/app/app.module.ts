@@ -24,12 +24,17 @@ import { LayoutModule } from '@angular/cdk/layout';
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
 
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    LayoutModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
