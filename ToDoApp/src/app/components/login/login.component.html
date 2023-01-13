@@ -1,13 +1,13 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Login</h1>
-    <mat-card class="login-card">
+    <h1 >Login</h1>
+    <mat-card>
         <mat-card-header>
             <mat-card-title> Login </mat-card-title>
         </mat-card-header>
         <br />
         <mat-card-content>
                 <form>
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="full-width">
                         <mat-label>Username</mat-label>
                         <input type="text" matInput [formControl]="FormControl" placeholder="Ex. pat" [(ngModel)]="user.username" />
                         <mat-error *ngIf="FormControl.hasError('required')">
@@ -15,7 +15,7 @@
                         </mat-error>
                     </mat-form-field>
         
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="full-width">
                         <mat-label>Password</mat-label>
                         <input type="password" matInput [formControl]="FormControl" placeholder="Ex. pat" [(ngModel)]="user.password" />
                         <mat-error *ngIf="FormControl.hasError('required')">
