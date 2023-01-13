@@ -1,0 +1,42 @@
+<div class="grid-container">
+    <h1>List</h1>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> Add list </mat-card-title>
+        </mat-card-header>
+        <br />
+        <mat-card-content>
+            <form>
+                <mat-form-field class="full-width">
+                    <mat-label>Title</mat-label>
+                    <input type="text" matInput [formControl]="FormControl" placeholder="Ex. pat" [(ngModel)]="newlist.title" />
+                    <mat-error *ngIf="FormControl.hasError('required')">
+                        Title is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <button mat-raised-button (click)="submit()" color="primary"> Add</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    <br />
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> My list </mat-card-title>
+        </mat-card-header>
+        <br />
+        <mat-card-content>
+            <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option *ngFor="let list of lists" [value]="list">
+                    <mat-icon aria-hidden="false" aria-label="note icon" fontIcon="note"></mat-icon>
+                    &nbsp; {{ list.title }}
+                </mat-list-option>
+            </mat-selection-list>
+            <mat-divider></mat-divider>
+            <div style="margin-top: 10px">
+                _id selected: {{ shoes.selectedOptions.hasValue() ? shoes.selectedOptions.selected[0].value._id : 'None' }} &nbsp;
+                <button mat-raised-button color="warn" (click)="delete(shoes.selectedOptions.selected[0].value)">Delete</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+  
