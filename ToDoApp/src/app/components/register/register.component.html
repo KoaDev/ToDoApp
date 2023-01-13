@@ -1,0 +1,33 @@
+<div class="grid-container">
+    <h1>Register</h1>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> Register </mat-card-title>
+        </mat-card-header>
+        <br />
+        <mat-card-content>
+            <form>
+                <mat-form-field class="full-width">
+                    <mat-label>Username</mat-label>
+                    <input type="text" matInput [formControl]="FormControl" placeholder="Ex. pat" [(ngModel)]="user.username" />
+                    <mat-error *ngIf="FormControl.hasError('required')">
+                        Username is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+        
+                <mat-form-field class="full-width">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput [formControl]="FormControl" placeholder="Ex. pat" [(ngModel)]="user.password" />
+                    <mat-error *ngIf="FormControl.hasError('required')">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+        
+                <button mat-raised-button (click)="submit()" color="primary">
+                    Register
+                </button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+  
