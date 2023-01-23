@@ -71,6 +71,9 @@ export class TaskComponent implements OnInit {
       next : () => {
         this.ngOnInit();
         this._snackBar.open('Task added successfully | ' + this.newTask.title + ' to ' + this.newTask.list_id, 'Clear', { duration: 5000 });
+      },
+      error : err => {
+          this._snackBar.open(err.error.message, 'Clear', { duration: 5000 })
       }
     })
   }
@@ -78,6 +81,7 @@ export class TaskComponent implements OnInit {
   delete(task : Task) : void {
     this.taskService.removeTaches(task).subscribe({
       next : () => {
+        this.ngOnInit();
         this.tasks = this.tasks.filter(t => task._id != t._id);
         this._snackBar.open('Task deleted successfully | ' + task.title + ' with id ' + task._id, 'Clear', { duration: 5000 });
       }
