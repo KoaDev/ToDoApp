@@ -17,6 +17,7 @@
                 <mat-form-field class="full-width" appearance="fill">
                     <mat-label>List</mat-label>
                     <mat-select
+                    [formControl]="FormControl"
                     value="Ex. pat"
                     [(ngModel)]="newTask.list_id"
                     >

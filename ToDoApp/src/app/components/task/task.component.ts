@@ -112,5 +112,7 @@ export class TaskComponent implements OnInit {
     this.done = this.list_todo.filter(t => t.status == true);
 
     this._snackBar.open('Filtering by list | ' + list_id, 'Clear', { duration: 5000 });
+
+    console.log(list_id);
   }
 }
