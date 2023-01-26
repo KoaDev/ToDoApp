@@ -89,10 +89,20 @@ export class TaskComponent implements OnInit {
     task.list_id = list_id;
     this.taskService.put(task).subscribe({
       next : () => {
-        this._snackBar.open('Task mooved successfully | ' + task.title + ' to list ' + task.list_id, 'Clear', { duration: 5000 });
+        this._snackBar.open('Task changed successfully | ' + task.title + ' to list ' + task.list_id, 'Clear', { duration: 5000 });
       }
     })
   }
+
+  checked(task : Task,) {
+    task.status = !task.status;
+    this.taskService.put(task).subscribe({
+      next : () => {
+        this._snackBar.open('Task changed successfully | ' + task.title + ' to list ' + task.list_id, 'Clear', { duration: 5000 });
+      }
+    })
+  }
+
 
   loggout() {
     this.userService.logout().subscribe(() => {

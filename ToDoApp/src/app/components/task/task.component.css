@@ -56,6 +56,6 @@
 
 .button-container {
     display: flex;
-    justify-content: center;
-    width: 120px;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }

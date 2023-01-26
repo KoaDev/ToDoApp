@@ -25,6 +25,9 @@
                         list.title
                     }}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="FormControl.hasError('required')">
+                        List is <strong>required</strong>
+                        </mat-error>
                 </mat-form-field>
     
                 <button mat-raised-button color="primary" (click)="add()">Add</button>
@@ -43,9 +46,17 @@
                 <div cdkDropList id="{{list._id}}" [cdkDropListData]="filterList(list._id)" [cdkDropListConnectedTo]="connectedTo" class="list" (cdkDropListDropped)="drop($event)">
                     <div class="box" *ngFor="let item of filterList(list._id)" cdkDrag>
                         {{ item.title }}
-                        <button mat-icon-button color="warn" aria-label="Delete" (click)="delete(item)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
+                        <div>
+                            <button mat-icon-button color="warn" aria-label="Delete" (click)="delete(item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button *ngIf="!item.status" mat-icon-button color="primary" aria-label="check_box_outline_blank" (click)="checked(item)">
+                                <mat-icon>check_box_outline_blank</mat-icon>
+                            </button>
+                            <button *ngIf="item.status" mat-icon-button color="primary" aria-label="check_box" (click)="checked(item)">
+                                <mat-icon>check_box</mat-icon>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
