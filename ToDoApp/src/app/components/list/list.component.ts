@@ -46,13 +46,12 @@ export class ListComponent implements OnInit {
       next: res => {
         this.owner_id = res
         this.newlist.owner = this.owner_id._id
-
-        this.listService.get(this.owner_id._id).subscribe({
-          next: (data: Array<List>) => {
-            this.lists = data
-          }
-        })
       }
-    })
+    });
+    this.listService.get().subscribe({
+      next: (data: Array<List>) => {
+        this.lists = data
+      }
+    });
   }
 }

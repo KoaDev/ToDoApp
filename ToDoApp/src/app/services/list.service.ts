@@ -12,8 +12,8 @@ export class ListService {
 
   constructor(private http : HttpClient) { }
 
-  get(_id : string) : Observable<Array<List>> {
-    return this.http.get<Array<List>>(this.url + _id, {withCredentials : true});
+  get() : Observable<Array<List>> {
+    return this.http.get<Array<List>>('http://localhost:3000/list/', {withCredentials : true});
   }
 
   post(list : List) : Observable<List> {

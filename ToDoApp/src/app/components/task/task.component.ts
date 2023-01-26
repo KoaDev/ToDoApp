@@ -17,57 +17,54 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 export class TaskComponent implements OnInit {
   FormControl = new FormControl('', [Validators.required])
 
-  todo : Array<Task> = [];
-  done : Array<Task> = [];
-  list_todo : Array<Task> = [];
-
+  connectedTo : any[] = [];
+  lists : Array<List> = [];
   tasks : Array<Task> = [];
+
   newTask : Task = {
     title: '',
     status: false,
     list_id: '',
     owner: ''
   };
-
-  lists : Array<List> = [];
-  owner_id : any;
+  
+  owner_id : any = '';
 
   drop (event : CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray( event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      this.modify(event.container.data[event.currentIndex]);
+      this.modify(event.container.data[event.currentIndex], event.container.id);
     }
   }
 
-  constructor (private taskService : TaskService, private listService : ListService, private userService : UserService, private router : Router, private _snackBar : MatSnackBar) {}
+  constructor (private taskService : TaskService, private listService : ListService, private userService : UserService, private router : Router, private _snackBar : MatSnackBar){ }
 
   ngOnInit() : void {
-    this.taskService.getTaches().subscribe({
+    this.taskService.get().subscribe({
       next : (data : Array<Task>) => {
         this.tasks = data;
-        this.todo = this.tasks.filter(t => t.status == false);
-        this.done = this.tasks.filter(t => t.status == true);
       }
-    })
-
+    });
+    this.listService.get().subscribe({
+      next : (data: Array<List>) => {
+        this.lists = data;
+        for (let list of this.lists) {
+          this.connectedTo.push(list._id);
+        };
+      }
+    });
     this.userService.getinfo().subscribe({
       next : res => {
         this.owner_id = res;
-
-        this.listService.get(this.owner_id._id).subscribe({
-          next : (data: Array<List>) => {
-            this.lists = data;
-          }
-        })
       }
-    })
+    });
   }
 
   add() {
     this.newTask.owner = this.owner_id._id;
-    this.taskService.ajoutTaches(this.newTask).subscribe({
+    this.taskService.post(this.newTask).subscribe({
       next : () => {
         this.ngOnInit();
         this._snackBar.open('Task added successfully | ' + this.newTask.title + ' to ' + this.newTask.list_id, 'Clear', { duration: 5000 });
@@ -79,7 +76,7 @@ export class TaskComponent implements OnInit {
   }
 
   delete(task : Task) : void {
-    this.taskService.removeTaches(task).subscribe({
+    this.taskService.delete(task).subscribe({
       next : () => {
         this.ngOnInit();
         this.tasks = this.tasks.filter(t => task._id != t._id);
@@ -88,11 +85,11 @@ export class TaskComponent implements OnInit {
     })
   }
 
-  modify(task : Task) {
-    task.status = !task.status;
-    this.taskService.updateTaches(task).subscribe({
+  modify(task : Task, list_id : string) {
+    task.list_id = list_id;
+    this.taskService.put(task).subscribe({
       next : () => {
-        this._snackBar.open('Task changed successfully | ' + task.title + ' with id ' + task._id, 'Clear', { duration: 5000 });
+        this._snackBar.open('Task mooved successfully | ' + task.title + ' to list ' + task.list_id, 'Clear', { duration: 5000 });
       }
     })
   }
@@ -105,14 +102,10 @@ export class TaskComponent implements OnInit {
   }
 
   filterList(list_id : string | undefined) {
-    this.list_todo = this.tasks;
-    this.list_todo = this.tasks.filter(t => t.list_id == list_id);
-
-    this.todo = this.list_todo.filter(t => t.status == false);
-    this.done = this.list_todo.filter(t => t.status == true);
-
-    this._snackBar.open('Filtering by list | ' + list_id, 'Clear', { duration: 5000 });
-
-    console.log(list_id);
+    let source : any[] = [];
+    for (let task of this.tasks.filter(t => t.list_id == list_id)) {
+      source.push(task);
+    };
+    return source;
   }
 }
